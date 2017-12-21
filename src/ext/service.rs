@@ -56,9 +56,11 @@ impl ServiceExt for dc::Service {
 
     fn source_mount_dir(&self) -> Result<String> {
         let default = dc::escape("/app")?;
-        let srcdir = self.labels
-            .get("io.fdy.cage.srcdir")
-            .unwrap_or_else(|| &default);
+        let srcdir = match self.labels
+            .get("io.fdy.cage.srcdir") {
+            Some(&Some(ref v)) => v,
+            _ => &default,
+        };
         Ok(srcdir.value()?.to_owned())
     }
 
@@ -76,14 +78,16 @@ impl ServiceExt for dc::Service {
 
     fn shell(&self) -> Result<String> {
         let default = dc::escape("sh")?;
-        let shell = self.labels
-            .get("io.fdy.cage.shell")
-            .unwrap_or_else(|| &default);
+        let shell = match self.labels
+            .get("io.fdy.cage.shell") {
+            Some(&Some(ref v)) => v,
+            _ => &default,
+        };
         Ok(shell.value()?.to_owned())
     }
 
     fn test_command(&self) -> Result<Vec<String>> {
-        let raw = self.labels.get("io.fdy.cage.test").ok_or_else(|| {
+        let raw = self.labels.get("io.fdy.cage.test").and_then(|v| v.clone()).ok_or_else(|| {
             err("specify a value for the label io.fdy.cage.test to run tests")
         })?;
         let mut lexer = shlex::Shlex::new(raw.value()?);
@@ -127,6 +131,10 @@ impl ServiceExt for dc::Service {
                 let source = sources.find_by_lib_key(&lib_name).ok_or_else(
                     || -> Error { ErrorKind::UnknownLibKey(lib_name).into() },
                 )?;
+
+                let mount_as = mount_as.as_ref().ok_or_else(|| {
+                    err!("specify a value for {}", prefix)
+                })?;
 
                 libs.push(SourceMount {
                     container_path: mount_as.value()?.to_owned(),

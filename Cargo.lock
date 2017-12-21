@@ -93,7 +93,7 @@ dependencies = [
  "cli_test_dir 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "clippy 0.0.176 (registry+https://github.com/rust-lang/crates.io-index)",
  "colored 1.6.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "compose_yml 0.0.52 (registry+https://github.com/rust-lang/crates.io-index)",
+ "compose_yml 0.0.52",
  "copy_dir 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "env_logger 0.4.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "error-chain 0.5.0 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -220,7 +220,6 @@ dependencies = [
 [[package]]
 name = "compose_yml"
 version = "0.0.52"
-source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "error-chain 0.5.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "lazy_static 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -1240,7 +1239,6 @@ dependencies = [
 "checksum clippy_lints 0.0.176 (registry+https://github.com/rust-lang/crates.io-index)" = "41a8d1856b660dae1e2f15ec3a6321f5548eae902b9fc4c8b12596ac9f769162"
 "checksum coco 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "c06169f5beb7e31c7c67ebf5540b8b472d23e3eade3b2ec7d1f5b504a85f91bd"
 "checksum colored 1.6.0 (registry+https://github.com/rust-lang/crates.io-index)" = "b0aa3473e85a3161b59845d6096b289bb577874cafeaf75ea1b1beaa6572c7fc"
-"checksum compose_yml 0.0.52 (registry+https://github.com/rust-lang/crates.io-index)" = "c22fec933335fa3c2cb16ddcf813c762900967cf117fa27f8d02ced9272a4078"
 "checksum cookie 0.2.5 (registry+https://github.com/rust-lang/crates.io-index)" = "0e3d6405328b6edb412158b3b7710e2634e23f3614b9bb1c412df7952489a626"
 "checksum copy_dir 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = "6e4281031634644843bd2f5aa9c48cf98fc48d6b083bd90bb11becf10deaf8b0"
 "checksum dbghelp-sys 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)" = "97590ba53bcb8ac28279161ca943a924d1fd4a8fb3fa63302591647c4fc5b850"

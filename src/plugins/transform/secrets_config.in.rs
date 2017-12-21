@@ -9,11 +9,11 @@ struct ServiceSecrets {
 }
 
 impl ServiceSecrets {
-    fn to_compose_env(&self) -> BTreeMap<String, dc::RawOr<String>> {
+    fn to_compose_env(&self) -> BTreeMap<String, Option<dc::RawOr<String>>> {
         let mut env = BTreeMap::new();
         for (var, val) in &self.secrets {
             let val = dc::escape(val).expect("escape string should never fail");
-            env.insert(var.to_owned(), val);
+            env.insert(var.to_owned(), Some(val));
         }
         env
     }

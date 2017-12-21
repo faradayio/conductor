@@ -313,7 +313,7 @@ impl PluginTransform for Plugin {
             // Insert our VAULT_ADDR value into the generated files.
             service
                 .environment
-                .insert("VAULT_ADDR".to_owned(), dc::escape(generator.addr())?);
+                .insert("VAULT_ADDR".to_owned(), Some(dc::escape(generator.addr())?));
 
             // Get a list of policy "patterns" that apply to this service.
             let mut raw_policies = config.default_policies.clone();
@@ -351,13 +351,13 @@ impl PluginTransform for Plugin {
                 .chain_err(|| format!("could not generate token for '{}'", name))?;
             service
                 .environment
-                .insert("VAULT_TOKEN".to_owned(), dc::escape(token)?);
+                .insert("VAULT_TOKEN".to_owned(), Some(dc::escape(token)?));
 
             // Add in any extra environment variables.
             for (var, val) in &config.extra_environment {
                 service
                     .environment
-                    .insert(var.to_owned(), dc::escape(interpolated(val)?)?);
+                    .insert(var.to_owned(), Some(dc::escape(interpolated(val)?)?));
             }
         }
         Ok(())
