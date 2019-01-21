@@ -59,8 +59,14 @@ trait ArgMatchesExt {
     /// Extract `exec::Command` from our command-line arguments.
     fn to_exec_command(&self) -> Option<cage::args::Command>;
 
+    /// Extract `kill` options from our command-line arguments.
+    fn to_kill_options(&self) -> cage::args::opts::Kill;
+
     /// Extract 'logs' options from our command-line arguments.
     fn to_logs_options(&self) -> cage::args::opts::Logs;
+
+    /// Extract `ps` options from our command-line arguments.
+    fn to_ps_options(&self) -> cage::args::opts::Ps;
 
     /// Extract 'rm' options from our command-line arguments.
     fn to_rm_options(&self) -> cage::args::opts::Rm;
@@ -132,10 +138,22 @@ impl<'a> ArgMatchesExt for clap::ArgMatches<'a> {
         opts
     }
 
+    fn to_kill_options(&self) -> cage::args::opts::Kill {
+        let mut opts = cage::args::opts::Kill::default();
+        opts.signal = self.value_of("signal").map(|v| v.to_owned());
+        opts
+    }
+
     fn to_logs_options(&self) -> cage::args::opts::Logs {
         let mut opts = cage::args::opts::Logs::default();
         opts.follow = self.is_present("follow");
         opts.number = self.value_of("number").map(|v| v.to_owned());
+        opts
+    }
+
+    fn to_ps_options(&self) -> cage::args::opts::Ps {
+        let mut opts = cage::args::opts::Ps::default();
+        opts.only_ids = self.is_present("only_ids");
         opts
     }
 
@@ -287,10 +305,20 @@ fn run(matches: &clap::ArgMatches) -> Result<()> {
         }
         "source" => run_source(&runner, &mut proj, sc_matches)?,
         "generate" => run_generate(&runner, &proj, sc_matches)?,
+        "kill" => {
+            let acts_on = sc_matches.to_acts_on("POD_OR_SERVICE", true);
+            let opts = sc_matches.to_kill_options();
+            proj.kill(&runner, &acts_on, &opts)?;
+        }
         "logs" => {
             let acts_on = sc_matches.to_acts_on("POD_OR_SERVICE", true);
             let opts = sc_matches.to_logs_options();
             proj.logs(&runner, &acts_on, &opts)?;
+        }
+        "ps" => {
+            let acts_on = sc_matches.to_acts_on("POD_OR_SERVICE", true);
+            let opts = sc_matches.to_ps_options();
+            proj.ps(&runner, &acts_on, &opts)?;
         }
         "export" => {
             let dir = sc_matches.value_of("DIR").unwrap();

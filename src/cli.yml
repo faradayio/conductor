@@ -196,6 +196,15 @@ subcommands:
 
             cage test myservice rspec spec/my_new_feature_spec.rb
 
+  - kill:
+      about: "Send signals to containers"
+      args:
+        - signal:
+            short: "s"
+            value_name: "SIGNAL"
+            help: "SIGNAL to send to the container. Default is SIGKILL."
+        - POD_OR_SERVICE: *pod_or_service
+
   - logs:
       about: "Display logs for a service"
       args:
@@ -208,6 +217,13 @@ subcommands:
             help: "Number of lines from end of output to display"
         - POD_OR_SERVICE: *pod_or_service
 
+  - ps:
+      about: "List containers"
+      args:
+        - only_ids:
+            short: "q"
+            help: "Only display IDs"
+        - POD_OR_SERVICE: *pod_or_service
 
   - source:
       about: "Commands for working with git repositories and local source trees"
