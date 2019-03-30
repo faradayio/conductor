@@ -10,6 +10,7 @@ readme = "README.md"
 repository = "https://github.com/faradayio/cage"
 documentation = "https://docs.rs/cage/"
 homepage = "http://cage.faraday.io/"
+categories = ["development-tools", "os::unix-apis"]
 build = "build.rs"
 
 [badges]
