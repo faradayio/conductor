@@ -119,6 +119,9 @@ subcommands:
             long: "entrypoint"
             value_name: "ENTRYPOINT"
             help: "Override the entrypoint of the service"
+        - service-ports: &serviceports
+            long: "--service-ports"
+            help: "Run command with the service's ports enabled and mapped to the host."
         - environment: &environment
             short: "e"
             value_names: ["KEY", "VAL"]
@@ -176,6 +179,9 @@ subcommands:
       settings:
         - "TrailingVarArg"
       args:
+        - service-ports: &serviceports
+            long: "--service-ports"
+            help: "Run command with the service's ports enabled and mapped to the host."
         - detached: *detached
         - user: *user
         - no-allocate-tty: *notty

@@ -203,6 +203,9 @@ pub struct Run {
     /// default: false
     pub no_deps: bool,
 
+    /// Forward service ports?
+    pub service_ports: bool,
+
     /// PRIVATE: This field is a stand-in for future options.
     /// See http://stackoverflow.com/q/39277157/12089
     #[doc(hidden)]
@@ -236,6 +239,9 @@ impl ToArgs for Run {
         }
         if self.no_deps {
             args.push(OsStr::new("--no-deps").to_owned());
+        }
+        if self.service_ports {
+            args.push(OsStr::new("--service-ports").to_owned());
         }
         args
     }
